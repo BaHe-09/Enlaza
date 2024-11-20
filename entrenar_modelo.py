@@ -8,7 +8,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
 
 # Cargar el dataset de puntos clave
-data = pd.read_csv("puntos_clave.csv")
+data = pd.read_csv("puntos_clave_tipo2.csv")
 
 # Separar características (X) y etiquetas (y)
 X = data.drop("label", axis=1).values  # Todas las columnas excepto la etiqueta
@@ -59,5 +59,5 @@ loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Precisión en el conjunto de prueba: {accuracy * 100:.2f}%")
 
 # Guardar el modelo entrenado
-model.save("modelo_reconocimiento_senas.h5")
+model.save("modelo_reconocimiento_senas_1_tipo2_21.h5")
 print("Modelo guardado")

@@ -4,14 +4,14 @@ import numpy as np
 from tensorflow.keras.models import load_model
 
 # Cargar el modelo entrenado
-model = load_model("modelo_reconocimiento_senas.h5")
+model = load_model("modelo_reconocimiento_senas_1_tipo2_21.h5")
 
 # Inicializar MediaPipe y OpenCV
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 
 # Mapeo de etiquetas de clases 
-class_names = ["j", "k", "ll", "nn", "q", "rr", "x", "z"]
+class_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "a", "e", "i", "u","o","b", "c","d", "f","g","h","l","m","n","p","s", "r","t","v","w","y"]
 
 # Captura de video en tiempo real
 cap = cv2.VideoCapture(0)
