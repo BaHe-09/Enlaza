@@ -2,19 +2,35 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from tensorflow.keras.models import load_model
+import time
 
 # Cargar el modelo entrenado
-model = load_model("modelo_reconocimiento_senas.h5")
+model = load_model("modelo_reconocimiento_senas_1_tipo2_21.h5")
 
 # Inicializar MediaPipe y OpenCV
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 
-# Mapeo de etiquetas de clases 
-class_names = ["j", "k", "ll", "nn", "q", "rr", "x", "z"]
+# Mapeo de etiquetas de clases
+class_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "a", "e", "i", "u", "o"]
 
 # Captura de video en tiempo real
 cap = cv2.VideoCapture(0)
+
+# Variables para deletrear palabras
+current_word = ""  # Palabra que se está formando
+last_letter = ""  # Última letra detectada para evitar duplicados consecutivos
+frame_counter = 0  # Contador de fotogramas para estabilizar la letra detectada
+stabilization_frames = 10  # Número de fotogramas consecutivos para estabilizar una letra
+
+# Variables para limpiar la palabra
+last_detection_time = time.time()  # Último momento en que se detectó una letra
+timeout = 5  # Tiempo en segundos sin detección para borrar la palabra
+
+# Configuración para pantalla completa
+cv2.namedWindow("Predicción en Tiempo Real", cv2.WINDOW_NORMAL)
+cv2.setWindowProperty("Predicción en Tiempo Real", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
 
 while cap.isOpened():
     success, image = cap.read()
@@ -45,22 +61,44 @@ while cap.isOpened():
             class_index = np.argmax(prediction)
             class_label = class_names[class_index]  # Obtener la clase predicha
 
+            # Si la letra es igual a la última detectada, incrementar el contador
+            if class_label == last_letter:
+                frame_counter += 1
+            else:
+                frame_counter = 0  # Reiniciar el contador si cambia la letra
+                last_letter = class_label  # Actualizar la última letra
+
+            # Si se estabiliza por los fotogramas requeridos, añadir la letra
+            if frame_counter >= stabilization_frames:
+                current_word += class_label
+                frame_counter = 0  # Reiniciar el contador después de añadir la letra
+
+            # Actualizar el tiempo de la última detección
+            last_detection_time = time.time()
+
+    # Borrar la palabra si no hay detección durante el tiempo especificado
+    if time.time() - last_detection_time > timeout:
+        current_word = ""
+
     # Configuración de texto y posición
     image_height, image_width, _ = image.shape
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 1
     font_thickness = 2
-    text = f"- {class_label} -"
 
-    # Obtener tamaño del texto para calcular la posición centrada
-    (text_width, text_height), _ = cv2.getTextSize(text, font, font_scale, font_thickness)
-    text_x = (image_width - text_width) // 2  # Calcular posición x centrada
-    text_y = image_height - 15  # Posición y en la parte inferior
+    # Mostrar la letra detectada en tiempo real
+    text_letter = f"Letra: {class_label}"
+    (text_width, text_height), _ = cv2.getTextSize(text_letter, font, font_scale, font_thickness)
+    text_x = (image_width - text_width) // 2  # Posición centrada
+    text_y = 50  # Parte superior
+    cv2.putText(image, text_letter, (text_x, text_y), font, font_scale, (255, 255, 255), font_thickness, lineType=cv2.LINE_AA)
 
-    # Contorno negro
-    cv2.putText(image, text, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness + 2, lineType=cv2.LINE_AA)
-    # Texto amarillo encima del contorno
-    cv2.putText(image, text, (text_x, text_y), font, font_scale, (0, 255, 255), font_thickness, lineType=cv2.LINE_AA)
+    # Mostrar la palabra formada
+    text_word = f"Palabra: {current_word}"
+    (text_width, text_height), _ = cv2.getTextSize(text_word, font, font_scale, font_thickness)
+    text_x = (image_width - text_width) // 2  # Posición centrada
+    text_y = image_height - 50  # Parte inferior
+    cv2.putText(image, text_word, (text_x, text_y), font, font_scale, (0, 255, 0), font_thickness, lineType=cv2.LINE_AA)
 
     # Mostrar la imagen en pantalla
     cv2.imshow("Predicción en Tiempo Real", image)
