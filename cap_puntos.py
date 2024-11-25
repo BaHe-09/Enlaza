@@ -13,7 +13,7 @@ mp_drawing = mp.solutions.drawing_utils
 data = []
 
 # Nombre del archivo CSV donde se guardarán los datos
-output_csv = "puntos_clave1.csv"
+output_csv = "puntos_clave_tipo.csv"
 
 # Solicitar al usuario la etiqueta de clase (ej., "A", "1", etc.)
 label = input("Ingresa la clase (letra o número) para esta captura: ")
@@ -85,3 +85,4 @@ else:
     data_df.to_csv(output_csv, index=False)
 
 print(f"Datos guardados en {output_csv}.")
+
