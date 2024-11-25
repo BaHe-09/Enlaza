@@ -11,7 +11,7 @@ from tensorflow.keras.regularizers import l2
 data = pd.read_csv("puntos_clave.csv")
 
 # Separar características (X) y etiquetas (y)
-X = data.drop("label", axis=1).values  # Todas las columnas excepto la etiqueta
+X = data.drop("label", axis=1).values  # Todas las columnas excepto la etiqueta / convierte los datos en arreglos Numpy
 y = pd.factorize(data["label"])[0]     # Convertir etiquetas a índices numéricos
 
 # Dividir los datos en conjuntos de entrenamiento y prueba
@@ -19,9 +19,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # Definir el modelo de red neuronal optimizado
 model = Sequential([
-    Dense(256, activation='relu', kernel_regularizer=l2(0.001), input_shape=(X_train.shape[1],)),
-    BatchNormalization(),
-    Dropout(0.4),
+    Dense(256, activation='relu', kernel_regularizer=l2(0.001), input_shape=(X_train.shape[1],)), # Relaciones no lineales
+    BatchNormalization(), # Normaliza la salida
+    Dropout(0.4), # Desactivacion de neuronas (evita sobreajuste)
 
     Dense(128, activation='relu', kernel_regularizer=l2(0.001)),
     BatchNormalization(),
@@ -35,7 +35,7 @@ model = Sequential([
     BatchNormalization(),
     Dropout(0.2),
 
-    Dense(36, activation='softmax')  # 36 salidas para 26 letras + 10 números
+    Dense(30, activation='softmax')  # Cantidad de neuronas perteneciente a las clases
 ])
 
 # Compilar el modelo con un optimizador ajustado
@@ -59,5 +59,5 @@ loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Precisión en el conjunto de prueba: {accuracy * 100:.2f}%")
 
 # Guardar el modelo entrenado
-model.save("modelo_reconocimiento_senas.h5")
+model.save("modelo_reconocimiento_senas_1_tipo1_28.h5")
 print("Modelo guardado")
