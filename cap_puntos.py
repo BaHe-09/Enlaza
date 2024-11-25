@@ -24,7 +24,7 @@ print("Presiona 's' para guardar los puntos clave en el CSV, 'c' para cambiar la
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
-    success, image = cap.read()
+    success, image = cap.read() # Captura fotogram de video
     if not success:
         print("No se pudo capturar el video.")
         break
@@ -36,9 +36,9 @@ while cap.isOpened():
     results = hands.process(image_rgb)
 
     # Dibujar puntos clave y conexiones en la mano detectada
-    if results.multi_hand_landmarks:
+    if results.multi_hand_landmarks: # Contiene las ubicaciones de los puntos clave
         for hand_landmarks in results.multi_hand_landmarks:
-            mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+            mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS) # Dibujar los puntos clave
 
             # Extraer las coordenadas x, y, z de cada punto clave
             keypoints = []
@@ -76,7 +76,7 @@ if os.path.exists(output_csv):
     # Crear DataFrame de los nuevos datos con las mismas columnas
     data_df = pd.DataFrame(data, columns=existing_data.columns)
     # Agregar nuevos datos al archivo existente
-    data_df.to_csv(output_csv, mode='a', header=False, index=False)
+    data_df.to_csv(output_csv, mode='a', header=False, index=False) # Modo de apendice
 else:
     # Si el archivo no existe, crear uno nuevo con las columnas iniciales
     columns = [f"x{i}" for i in range(21)] + [f"y{i}" for i in range(21)] + [f"z{i}" for i in range(21)] + ["label"]

@@ -21,15 +21,24 @@ cap = cv2.VideoCapture(0)
 current_word = ""  # Palabra que se está formando
 last_letter = ""  # Última letra detectada para evitar duplicados consecutivos
 frame_counter = 0  # Contador de fotogramas para estabilizar la letra detectada
+<<<<<<< Updated upstream
 stabilization_frames = 10  # Número de fotogramas consecutivos para estabilizar una letra
+=======
+stabilization_frames = 7  # Número de fotogramas consecutivos para estabilizar una letra
+>>>>>>> Stashed changes
 
 # Variables para limpiar la palabra
 last_detection_time = time.time()  # Último momento en que se detectó una letra
 timeout = 5  # Tiempo en segundos sin detección para borrar la palabra
 
 # Configuración para pantalla completa
+<<<<<<< Updated upstream
 cv2.namedWindow("Predicción en Tiempo Real", cv2.WINDOW_NORMAL)
 cv2.setWindowProperty("Predicción en Tiempo Real", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+=======
+#cv2.namedWindow("Predicción en Tiempo Real", cv2.WINDOW_NORMAL)
+#cv2.setWindowProperty("Predicción en Tiempo Real", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+>>>>>>> Stashed changes
 
 
 while cap.isOpened():
