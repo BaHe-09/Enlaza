@@ -1,0 +1,46 @@
+Requisitos Previos
+1.	OBS Studio instalado (puedes descargarlo desde la página oficial).
+2.	El ejecutable (.exe) que crea el cámara virtual.
+3.	La aplicación de videollamadas (Zoom, Google Meet, etc.) instalada en tu sistema.
+
+
+Pasos para configurar OBS Studio para usar la cámara virtual
+1. Empezar a configurar la Cámara Virtual en tu Sistema
+1.	Ejecuta el archivo .exe que crea la cámara virtual.
+2.	Verifica que la cámara virtual se ejecute correctamente, te mostrara una ventana con la cámara y la funcionalidad de la traducción de señas mexicanas
+2. Configurar OBS Studio
+1.	Inicia OBS Studio:
+o	Descárgalo e instálalo si no lo tienes.
+o	Abre la aplicación después de la instalación.
+2.	Añadir la Fuente de Video:
+o	En OBS Studio, ve a la sección Fuentes en la parte inferior de la pantalla principal.
+o	Haz clic en el botón + y selecciona Dispositivo de captura de video.
+o	Asigna un nombre al nuevo dispositivo, (por defecto: “Dispositivo de captura de video”) y presiona el botón de aceptar
+3.	Seleccionar la Cámara Virtual:
+o	En la ventana de propiedades para el dispositivo de captura, hay un menú desplegable de dispositivos, selecciona la opción OBS Virtual Camera y selecciona aceptar.
+o	La cámara virtual de OBS debería mostrar la cámara del ejecutable (.exe) funcionando en la interfaz principal.
+3. Probar la Cámara Virtual
+1.	Abre una aplicación que soporte videollamadas, como Zoom.
+2.	Ve a las configuraciones de video:
+o	En Zoom: Configuración > Video.
+1.	En el menú desplegable de Camera selecciona OBS Virtual Camera, esto debería mostrar la cámara funcionando en la parte superior de la configuración
+2.	Marca la opción Original Ratio para mantener la relación de aspecto original y así mostrar las traducciones
+o	En Google Meet: Configuración desde el navegador
+o	Configuración > Video.
+o	Selecciona OBS Virtual Camera como dispositivo de video.
+
+3.Datos adicionales
+Una vez realizado toda la configuración de OBS virtual camera ya no será necesario volver a realizar los pasos, al iniciar las aplicaciones nuevamente la cámara virtual de las aplicaciones como zoom funcionaran correctamente después de ejecutar el .exe
+
+
+
+Solución de Problemas
+1.	La cámara virtual no aparece en OBS:
+o	Asegúrate de que él .exe que genera la cámara virtual esté corriendo.
+o	Reinstala los drivers de la cámara virtual si es necesario.
+2.	OBS no detecta la cámara virtual:
+o	Intenta reiniciar OBS después de ejecutar el archivo .exe.
+o	Verifica que la cámara virtual esté funcionando en el sistema operativo.
+3.	Zoom no detecta OBS Virtual Camera:
+o	Asegúrate de que OBS Studio esté ejecutándose y la cámara virtual esté activada.
+
